@@ -20,7 +20,7 @@ public class CalculatorImpl implements ICalculator{
     @Produces(MediaType.TEXT_XML)
 	@Path("/GetTestHTML")
 	public String getTestHTML() {
-		StringBuffer result = new StringBuffer("<html><head><Title>Test HTML</Title></head>");
+		StringBuilder result = new StringBuilder("<html><head><Title>Test HTML</Title></head>");
 		result.append("<br/>");
 		result.append("<body>This is a test for html content</body></html>");
 		return result.toString();
@@ -43,10 +43,11 @@ public class CalculatorImpl implements ICalculator{
     @GET
     @Path("/GetBankRateHTML")
     @Consumes(MediaType.TEXT_HTML)
-    @Produces(MediaType.TEXT_HTML)
+    @Produces(MediaType.APPLICATION_XML)
     public BankRate getCurrentBankRateHTML(@QueryParam("bankName") String bankName) throws RemoteException {
+        DecimalFormat twoDForm = new DecimalFormat("#.##");
         float rate = (float) ((Math.random() * 4) + 2);
-        BankRate bankRate = new BankRate(rate, bankName);
+        BankRate bankRate = new BankRate((Double.valueOf(twoDForm.format(rate))),bankName);
         return bankRate;
     }
 }

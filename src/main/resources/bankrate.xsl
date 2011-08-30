@@ -5,7 +5,7 @@
         xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
         xmlns="http://www.w3.org/1999/xhtml">
     <xsl:output method="html" indent="yes" encoding="UTF-8"/>
-    <xsl:template match="bankrate">
+    <xsl:template match="bankRate">
         <html>
             <head>
                 <title>Bank Rate XML 2 HTML Example</title>

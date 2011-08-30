@@ -7,7 +7,6 @@
  */
 package com.mulesoft.example.muleexamplexslt;
 
-import org.junit.Before;
 import org.mule.api.MuleMessage;
 import org.mule.module.client.MuleClient;
 import org.mule.tck.FunctionalTestCase;
@@ -19,11 +18,6 @@ public class MuleexamplexsltTestCase extends FunctionalTestCase
 {
 
     public HashMap headerProps = new HashMap();
-
-    @Before
-    public void setHeaders(){
-        headerProps.put("http.method","GET");
-    }
 
     protected String getConfigResources()
     {
@@ -61,23 +55,20 @@ public class MuleexamplexsltTestCase extends FunctionalTestCase
         assertNull(result.getExceptionPayload());
         assertFalse(result.getPayload() instanceof NullPayload);
 
+        String output = result.getPayloadAsString();
+        System.out.println(output);
+
         //TODO Assert the correct data has been received
-        assertEquals("        <html>\n" +
-                "            <head>\n" +
-                "                <title>Bank Rate XML 2 HTML Example</title>\n" +
-                "            </head>\n" +
-                "            <body>\n" +
-                "                <h1>Bank Name and Bank Rate for loan</h1>\n" +
-                "                <br/>\n" +
-                "                The Bank Name found is:\n" +
-                "                <xsl:value-of select=\"bankName\"/>\n" +
-                "                <br/>\n" +
-                "                The Rate at this bank is:<xsl:value-of select=\"rate\"/>%\n" +
-                "                <br/>\n" +
-                "                <br/>\n" +
-                "                <br/>\n" +
-                "            </body>\n" +
-                "        </html>", result.getPayloadAsString());
+        assertEquals("<html xmlns=\"http://www.w3.org/1999/xhtml\">\n" +
+                "   <head>\n" +
+                "      <title>Bank Rate XML 2 HTML Example</title>\n" +
+                "   </head>\n" +
+                "   <body>\n" +
+                "      <h1>Bank Name and Bank Rate for loan</h1><br></br>\n" +
+                "      The Bank Name found is:\n" +
+                "      <br></br>\n" +
+                "      The Rate at this bank is:", result.getPayloadAsString().substring(0,259));
+
     }
 
 }
